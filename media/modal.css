@@ -1,0 +1,190 @@
+/* Modal styles for TextFSM Tester */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000; /* Higher z-index to ensure it's above everything */
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+.modal-content {
+    position: relative;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    width: 400px;
+    max-width: 80%;
+    max-height: 80vh; /* Limit height to 80% of viewport */
+    overflow-y: auto; /* Allow scrolling inside the modal */
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    top:auto; 
+
+    /* Add animation */
+    animation: modalopen 0.3s;
+}
+
+/* Styling for the close button */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    color: var(--foreground-color);
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1010; /* Above other modal content */
+    line-height: 1;
+}
+
+.close-button:hover {
+    color: var(--accent-color);
+}
+
+/* Modal header */
+.modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 15px;
+    padding-top: 8px;
+}
+
+.logo-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+#logo-img {
+    width: 60px;
+    height: auto;
+    border-radius: 4px;
+}
+
+/* Modal body content */
+.modal-body {
+    padding: 0 5px;
+}
+
+.modal-body h2 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: var(--title-color);
+    font-size: 18px;
+}
+
+.modal-body h3 {
+    margin-top: 14px;
+    margin-bottom: 8px;
+    color: var(--title-color);
+    font-size: 15px;
+}
+
+.modal-body p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+    font-size: 13px;
+}
+
+.modal-body ul {
+    margin-bottom: 15px;
+    padding-left: 20px;
+}
+
+.modal-body li {
+    margin-bottom: 5px;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.external-link {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.external-link:hover {
+    text-decoration: underline;
+}
+
+.version-info {
+    margin-top: 15px;
+    font-size: 11px;
+    color: var(--label-color);
+    text-align: right;
+    padding-bottom: 5px;
+}
+
+/* Animation for modal opening */
+/* @keyframes modalopen {
+    from {opacity: 0; transform: translate(-50%, -55%);}
+    to {opacity: 1; transform: translate(-50%, -50%);}
+} */
+
+/* Info button style */
+.info-button {
+    background-color: var(--accent-color);
+    margin-left: 8px;
+}
+
+/* Responsive adjustments for different screen sizes */
+@media screen and (max-height: 600px) {
+    .modal-content {
+        max-height: 88vh;
+        padding: 12px;
+        font-size: 12px;
+    }
+    
+    .modal-body h2 {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+    
+    .modal-body h3 {
+        font-size: 14px;
+        margin-top: 10px;
+        margin-bottom: 6px;
+    }
+    
+    .modal-body p, .modal-body li {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+    
+    .modal-body ul {
+        margin-bottom: 10px;
+    }
+    
+    #logo-img {
+        width: 45px;
+    }
+}
+
+/* For very small screens */
+@media screen and (max-height: 400px) {
+    .modal-content {
+        padding: 10px;
+        max-height: 90vh;
+    }
+    
+    .logo-container {
+        display: none; /* Hide logo on very small screens */
+    }
+    
+    .modal-header {
+        margin-bottom: 8px;
+    }
+    
+    .close-button {
+        top: 5px;
+        right: 10px;
+    }
+}

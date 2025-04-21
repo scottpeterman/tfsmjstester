@@ -1,0 +1,109 @@
+{
+  "name": "textfsm-tester",
+  "displayName": "TextFSM Tester",
+  "description": "Test and debug TextFSM templates within VS Code",
+  "version": "0.1.0",
+  "publisher": "ScottPeterman",
+  "author": {
+    "name": "Scott Peterman"
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "textfsm",
+    "network",
+    "parsing",
+    "template",
+    "cisco",
+    "juniper",
+    "arista"
+  ],
+  "icon": "media/logo.jpg",
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "textfsm-tester.openTester",
+        "title": "Open TextFSM Tester"
+      },
+      {
+        "command": "textfsm-tester.openAsTemplate",
+        "title": "Open in TextFSM Tester as Template"
+      },
+      {
+        "command": "textfsm-tester.openAsInput",
+        "title": "Open in TextFSM Tester as Input"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "developer-tools",
+          "title": "Developer Tools",
+          "icon": "media/tools-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "developer-tools": [
+        {
+          "id": "developerToolsList",
+          "name": "Available Tools"
+        }
+      ]
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "textfsm-tester.openAsTemplate",
+          "group": "textfsm",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "textfsm-tester.openAsInput",
+          "group": "textfsm",
+          "when": "editorTextFocus"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "textfsm-tester.openAsTemplate",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "textfsm-tester.openAsInput",
+          "when": "editorTextFocus"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scottpeterman/tfsmjstester.git"
+  },
+  "bugs": {
+    "url": "https://github.com/scottpeterman/tfsmjstester/issues"
+  },
+  "homepage": "https://github.com/scottpeterman/tfsmjstester#readme",
+  "devDependencies": {
+    "@types/vscode": "^1.60.0",
+    "eslint": "^8.36.0",
+    "glob": "^10.2.7",
+    "vscode-test": "^1.3.0"
+  }
+}

@@ -1,0 +1,268 @@
+:root {
+    --background-color: var(--vscode-editor-background);
+    --foreground-color: var(--vscode-editor-foreground);
+    --border-color: var(--vscode-panel-border);
+    --input-background: var(--vscode-input-background);
+    --input-foreground: var(--vscode-input-foreground);
+    --input-border: var(--vscode-input-border);
+    --button-background: var(--vscode-button-background);
+    --button-foreground: var(--vscode-button-foreground);
+    --button-hover-background: var(--vscode-button-hoverBackground);
+    --accent-color: var(--vscode-textLink-foreground);
+    --error-color: var(--vscode-editorError-foreground, #f14c4c);
+    --success-color: var(--vscode-testing-iconPassed, #23d18b);
+    --warning-color: var(--vscode-editorWarning-foreground, #cca700);
+    --title-color: var(--vscode-titleBar-activeForeground);
+    --label-color: var(--vscode-descriptionForeground);
+}
+
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: var(--vscode-font-family);
+    background-color: var(--background-color);
+    color: var(--foreground-color);
+    line-height: 1.6;
+    overflow: hidden; /* Default to hidden */
+}
+
+/* Calculate the available height */
+:root {
+    --terminal-height: 150px; /* Estimated terminal height */
+    --tabs-height: 35px; /* Estimated tab bar height */
+    --title-bar-height: 20px; /* Estimated title bar height */
+    --toolbar-height: 40px; /* Our app's toolbar height */
+    --available-height: calc(100vh - var(--terminal-height) - var(--tabs-height) - var(--title-bar-height));
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    height: var(--available-height);
+    min-height: 300px;
+    box-sizing: border-box;
+    overflow: auto; /* Allow container to scroll if needed */
+}
+
+h1 {
+    color: var(--title-color);
+    margin: 4px 0 8px 0;
+    font-weight: normal;
+    font-size: 16px;
+    flex-shrink: 0; /* Don't allow title to shrink */
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    margin-bottom: 6px;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0; /* Don't allow toolbar to shrink */
+}
+
+.text-area-container {
+    display: flex;
+    gap: 8px;
+    flex: 1; /* Take up all available space */
+    min-height: 200px;
+    max-height: calc(var(--available-height) - 80px); /* Account for toolbar and header */
+    overflow: hidden; /* Don't overflow */
+}
+
+.textarea-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(50, 50, 60, 0.4);
+    border-radius: 4px;
+    padding: 6px;
+    border: 1px solid var(--border-color);
+    overflow: hidden; /* Don't overflow */
+}
+
+textarea {
+    flex: 1; /* Take up all available space */
+    padding: 6px;
+    font-family: var(--vscode-editor-font-family, monospace);
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    resize: none;
+    background-color: rgba(30, 30, 35, 0.6);
+    color: var(--input-foreground);
+    font-size: 13px;
+    line-height: 1.4;
+    overflow: auto; /* Allow scrolling */
+}
+
+textarea:focus {
+    outline: 1px solid var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: var(--title-color);
+    font-size: 13px;
+    letter-spacing: 0.3px;
+    flex-shrink: 0; /* Don't allow label to shrink */
+}
+
+.buttons {
+    display: flex;
+    gap: 8px;
+}
+
+/* Add a subtle accent color to each panel type */
+.textarea-group:nth-child(1) {
+    background-color: rgba(65, 85, 95, 0.3);
+    border-color: rgba(100, 140, 160, 0.3);
+}
+
+.textarea-group:nth-child(2) {
+    background-color: rgba(75, 85, 65, 0.3);
+    border-color: rgba(120, 150, 100, 0.3);
+}
+
+.textarea-group:nth-child(3) {
+    background-color: rgba(85, 75, 95, 0.3);
+    border-color: rgba(150, 120, 160, 0.3);
+}
+
+/* For light themes - adjust background opacities */
+.vscode-light .textarea-group:nth-child(1) {
+    background-color: rgba(220, 230, 240, 0.3);
+    border-color: rgba(180, 200, 220, 0.5);
+}
+
+.vscode-light .textarea-group:nth-child(2) {
+    background-color: rgba(225, 240, 225, 0.3);
+    border-color: rgba(190, 210, 190, 0.5);
+}
+
+.vscode-light .textarea-group:nth-child(3) {
+    background-color: rgba(235, 225, 240, 0.3);
+    border-color: rgba(210, 190, 220, 0.5);
+}
+
+.toolbar > div {
+    display: flex;
+    gap: 6px;
+}
+
+button {
+    padding: 3px 8px;
+    background-color: var(--button-background);
+    color: var(--button-foreground);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background-color: var(--button-hover-background);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button.primary {
+    background-color: var(--accent-color);
+}
+
+button.success {
+    background-color: var(--success-color);
+}
+
+button.clear {
+    background-color: var(--error-color);
+    color: white;
+}
+
+button.clear:hover {
+    opacity: 0.9;
+}
+
+.status {
+    font-size: 11px;
+    margin-top: 4px;
+    color: var(--vscode-descriptionForeground);
+    padding: 2px 4px;
+    border-radius: 2px;
+    background-color: var(--input-background);
+}
+
+/* Add some spacing in the result area */
+#result {
+    font-size: 13px;
+    line-height: 1.5;
+    background-color: var(--input-background);
+    font-family: 'Consolas', 'Monaco', monospace;
+}
+
+/* Add theme-switching support */
+.vscode-light {
+    --custom-shadow: rgba(0, 0, 0, 0.1);
+}
+
+.vscode-dark {
+    --custom-shadow: rgba(0, 0, 0, 0.4);
+}
+
+.vscode-high-contrast {
+    --custom-shadow: none;
+}
+
+/* Adjust scrollbars to match VS Code style */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--vscode-scrollbarSlider-background);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--vscode-scrollbarSlider-hoverBackground);
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Box shadow for containers based on theme */
+.box-shadow {
+    box-shadow: 0 2px 4px var(--custom-shadow);
+}
+
+/* Media query for very small heights - make everything more compact */
+@media screen and (max-height: 500px) {
+    .text-area-container {
+        min-height: 150px;
+    }
+}
+
+/* For extremely narrow viewports, stack the text areas vertically */
+@media screen and (max-width: 500px) {
+    .text-area-container {
+        flex-direction: column;
+    }
+    
+    .textarea-group {
+        min-height: 120px;
+    }
+}

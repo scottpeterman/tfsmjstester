@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <style>
+    .icon-stroke { stroke: #ff9d00; }
+    .icon-fill { fill: #ff9d00; }
+    .icon-bg { fill: none; }
+    
+    /* Theme adaptive colors - this is the key part */
+    @media (prefers-color-scheme: light) {
+      .icon-grid { stroke: rgba(0, 0, 0, 0.2); }
+    }
+    @media (prefers-color-scheme: dark) {
+      .icon-grid { stroke: rgba(255, 157, 0, 0.3); }
+    }
+  </style>
+
+  <!-- Background - transparent -->
+  <rect class="icon-bg" width="24" height="24"/>
+  
+  <!-- Simplified grid pattern -->
+  <g class="icon-grid" stroke-width="0.2" opacity="0.5">
+    <line x1="6" y1="0" x2="6" y2="24"/>
+    <line x1="12" y1="0" x2="12" y2="24"/>
+    <line x1="18" y1="0" x2="18" y2="24"/>
+    <line x1="0" y1="6" x2="24" y2="6"/>
+    <line x1="0" y1="12" x2="24" y2="12"/>
+    <line x1="0" y1="18" x2="24" y2="18"/>
+  </g>
+  
+  <!-- Outer Circle -->
+  <circle cx="12" cy="12" r="9" fill="none" class="icon-stroke" stroke-width="1.5" opacity="0.9"/>
+  
+  <!-- Triangles -->
+  <path d="M12 4 L19 18 L5 18 Z" fill="none" class="icon-stroke" stroke-width="1.5" opacity="0.9"/>
+  <path d="M12 7 L17 16 L7 16 Z" fill="none" class="icon-stroke" stroke-width="1" opacity="0.8"/>
+  
+  <!-- Crosshair lines -->
+  <g class="icon-stroke" stroke-width="0.5" opacity="0.7">
+    <line x1="4" y1="12" x2="20" y2="12"/>
+    <line x1="12" y1="4" x2="12" y2="20"/>
+  </g>
+  
+  <!-- Small highlight at tip of triangle -->
+  <circle cx="12" cy="3.5" r="0.8" class="icon-fill" opacity="0.9"/>
+</svg>

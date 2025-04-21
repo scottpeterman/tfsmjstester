@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TextFSM JavaScript Tester</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="modal.css">
+
+</head>
+<body>
+    <div class="toolbar">
+        <h1>TextFSM JavaScript Tester</h1>
+        <div class="theme-toggle">
+            <!-- Theme will be controlled by VS Code -->
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="buttons toolbar">
+            <div>
+                <button id="open-template" type="button">Open Template File</button>
+                <button id="open-text" type="button">Open Input File</button>
+                <button id="about-button" type="button" class="info-button">About</button> 
+            </div>
+            <div>
+                <button id="parse" type="button" class="primary">Parse Text</button>
+                <button id="parse-dict" type="button">Parse to Dictionary</button>
+                <button class="clear" id="clear" type="button">Clear All</button>
+            </div>
+        </div>
+        
+        <div class="text-area-container">
+            <div class="textarea-group box-shadow">
+                <label for="template">Template:</label>
+                <textarea id="template" placeholder="Enter TextFSM template here...">Value Interface (\S+/\d)
+Value Status (up|down)
+Value Protocol (up|down)
+
+Start
+  ^${Interface}\s+${Status}\s+${Protocol} -> Record</textarea>
+            </div>
+
+            <div class="textarea-group box-shadow">
+                <label for="text">Input Text:</label>
+                <textarea id="text" placeholder="Enter text to parse here...">Interface    Status    Protocol
+Gig0/1       up        up
+Gig0/2       down      down
+Gig0/3       up        up</textarea>
+            </div>
+
+            <div class="textarea-group box-shadow">
+                <label for="result">Result:</label>
+                <textarea id="result" readonly></textarea>
+                <div class="status" id="status"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div id="about-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div class="modal-header">
+                <div class="logo-container">
+                    <img id="logo-img" src="https://raw.githubusercontent.com/scottpeterman/terminaltelemetryvsc/refs/heads/main/media/logo.jpg" alt="TextFSM JS Logo" style="width: 25%; height: auto;" onerror="this.style.display='none'">
+                </div>
+                <h2>TextFSM JavaScript Tester</h2>
+            </div>
+            <div class="modal-body">
+                <p>TextFSM JavaScript Tester is a VS Code extension for testing and debugging TextFSM templates directly in your editor.</p>
+                
+                <p>This tool uses <strong>TextFSM JS</strong> - a JavaScript port of the original Python TextFSM library, designed for parsing semi-structured text into structured data.</p>
+                
+                <h3>Features:</h3>
+                <ul>
+                    <li>Test TextFSM templates against input data</li>
+                    <li>View results as arrays or dictionaries</li>
+                    <li>Load templates and input from files</li>
+                    <li>Integrated theme support</li>
+                </ul>
+                
+                <h3>Resources:</h3>
+                <ul>
+                    <li><a href="https://github.com/scottpeterman/tfsmjs" class="external-link">TextFSM JS Repository</a></li>
+                    <li><a href="https://github.com/scottpeterman/tfsmjstester" class="external-link">This Extension's Repository</a></li>
+                    <li><a href="https://github.com/scottpeterman/terminaltelemetryvsc" class="external-link">Terminal Telemetry VS Code</a></li>
+                </ul>
+                
+                <p class="version-info">Version: 1.0.0</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load the TextFSM library -->
+    <script type="text/javascript" src="tfsm.js"></script>
+    
+    <!-- Load the main application JavaScript -->
+    <script type="text/javascript" src="main.js"></script>
+</body>
+</html>
