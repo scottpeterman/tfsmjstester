@@ -97,12 +97,17 @@ function openTextFSMTester(context, initialContent = {}) {
     }
   );
 
-  // Get path to the HTML file, the tfsm.js file, the main.js file, and the CSS files
+  // Get path to all required files
   const htmlPath = vscode.Uri.file(path.join(context.extensionPath, 'media', 'index.html'));
   const tfsmPath = vscode.Uri.file(path.join(context.extensionPath, 'media', 'tfsm.js'));
   const mainJsPath = vscode.Uri.file(path.join(context.extensionPath, 'media', 'main.js'));
   const cssPath = vscode.Uri.file(path.join(context.extensionPath, 'media', 'styles.css'));
   const modalCssPath = vscode.Uri.file(path.join(context.extensionPath, 'media', 'modal.css'));
+  
+  // Add paths for CodeMirror files
+  const cmJsPath = vscode.Uri.file(path.join(context.extensionPath, 'media', 'codemirror.min.js'));
+  const cmCssPath = vscode.Uri.file(path.join(context.extensionPath, 'media', 'codemirror.min.css'));
+  const cmSimpleJsPath = vscode.Uri.file(path.join(context.extensionPath, 'media', 'simple.min.js'));
   
   // And get the local path to these resources
   const htmlUri = panel.webview.asWebviewUri(htmlPath);
@@ -110,31 +115,49 @@ function openTextFSMTester(context, initialContent = {}) {
   const mainJsUri = panel.webview.asWebviewUri(mainJsPath);
   const cssUri = panel.webview.asWebviewUri(cssPath);
   const modalCssUri = panel.webview.asWebviewUri(modalCssPath);
+  
+  // Get the CodeMirror URIs
+  const cmJsUri = panel.webview.asWebviewUri(cmJsPath);
+  const cmCssUri = panel.webview.asWebviewUri(cmCssPath);
+  const cmSimpleJsUri = panel.webview.asWebviewUri(cmSimpleJsPath);
 
   // Read the HTML file
   const htmlContent = fs.readFileSync(path.join(context.extensionPath, 'media', 'index.html'), 'utf8');
   
-  // Replace the script src with the webview URI and add the CSS link
-  let modifiedHtml = htmlContent.replace(
+  // Replace the script and CSS src with the webview URI
+  let modifiedHtml = htmlContent;
+  
+  // Replace CodeMirror CSS
+  modifiedHtml = modifiedHtml.replace(
+    '<link rel="stylesheet" href="codemirror.min.css">',
+    `<link rel="stylesheet" href="${cmCssUri}">`
+  );
+  
+  // Replace CodeMirror JS files
+  modifiedHtml = modifiedHtml.replace(
+    '<script type="text/javascript" src="codemirror.min.js"></script>',
+    `<script type="text/javascript" src="${cmJsUri}"></script>`
+  );
+  
+  modifiedHtml = modifiedHtml.replace(
+    '<script type="text/javascript" src="simple.min.js"></script>',
+    `<script type="text/javascript" src="${cmSimpleJsUri}"></script>`
+  );
+  
+  // Replace TextFSM JS
+  modifiedHtml = modifiedHtml.replace(
     '<script type="text/javascript" src="tfsm.js"></script>',
     `<script type="text/javascript" src="${tfsmUri}"></script>`
   );
 
-  // Add the main.js script if it's not already in the HTML
-  if (!modifiedHtml.includes('src="main.js"')) {
-    modifiedHtml = modifiedHtml.replace(
-      '</body>',
-      `<script type="text/javascript" src="${mainJsUri}"></script>\n</body>`
-    );
-  } else {
-    modifiedHtml = modifiedHtml.replace(
-      '<script type="text/javascript" src="main.js"></script>',
-      `<script type="text/javascript" src="${mainJsUri}"></script>`
-    );
-  }
+  // Replace main.js
+  modifiedHtml = modifiedHtml.replace(
+    '<script type="text/javascript" src="main.js"></script>',
+    `<script type="text/javascript" src="${mainJsUri}"></script>`
+  );
   
-  // Add CSS link if not already present
-  if (!modifiedHtml.includes('<link rel="stylesheet"')) {
+  // Add CSS links if not already present
+  if (!modifiedHtml.includes(cssUri.toString())) {
     modifiedHtml = modifiedHtml.replace(
       '</head>',
       `<link rel="stylesheet" href="${cssUri}">\n</head>`
@@ -147,7 +170,7 @@ function openTextFSMTester(context, initialContent = {}) {
   }
   
   // Add modal CSS link if not already present
-  if (!modifiedHtml.includes('modal.css')) {
+  if (!modifiedHtml.includes(modalCssUri.toString())) {
     modifiedHtml = modifiedHtml.replace(
       '</head>',
       `<link rel="stylesheet" href="${modalCssUri}">\n</head>`

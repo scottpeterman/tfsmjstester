@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TextFSM JavaScript Tester</title>
+    <!-- CodeMirror CSS - using local file -->
+    <link rel="stylesheet" href="codemirror.min.css">
+    <!-- Regular CSS -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="modal.css">
-
+    <!-- <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script> -->
 </head>
 <body>
     <div class="toolbar">
@@ -92,6 +96,10 @@ Gig0/3       up        up</textarea>
         </div>
     </div>
 
+    <!-- Load CodeMirror JS - using local files -->
+    <script type="text/javascript" src="codemirror.min.js"></script>
+    <script type="text/javascript" src="simple.min.js"></script>
+    
     <!-- Load the TextFSM library -->
     <script type="text/javascript" src="tfsm.js"></script>
     

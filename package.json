@@ -2,7 +2,7 @@
   "name": "textfsm-tester",
   "displayName": "TextFSM Tester",
   "description": "Test and debug TextFSM templates within VS Code",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "ScottPeterman",
   "author": {
     "name": "Scott Peterman"
@@ -85,7 +85,23 @@
           "when": "editorTextFocus"
         }
       ]
-    }
+    },
+
+    "languages": [
+  {
+    "id": "textfsm",
+    "aliases": ["TextFSM", "textfsm"],
+    "extensions": [".textfsm", ".fsm", ".template"],
+    "configuration": "./language-configuration.json"
+  }
+],
+"grammars": [
+  {
+    "language": "textfsm",
+    "scopeName": "source.textfsm",
+    "path": "./syntaxes/textfsm.tmLanguage.json"
+  }
+]
   },
   "scripts": {
     "lint": "eslint .",

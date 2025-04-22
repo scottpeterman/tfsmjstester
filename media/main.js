@@ -17,11 +17,66 @@ document.addEventListener('DOMContentLoaded', function() {
     const aboutButton = document.getElementById('about-button');
     const closeButton = document.querySelector('.close-button');
     
+    // Initialize CodeMirror for template editor
+    let templateEditor;
+
+    // Define TextFSM mode for CodeMirror
+    CodeMirror.defineSimpleMode('textfsm', {
+        // Start state
+        start: [
+            // Comments
+            {regex: /#.*/, token: "comment"},
+            
+            // Value declarations
+            {regex: /^(Value)(\s+)(\w+)(\s+)(.*)$/, 
+             token: ["keyword", null, "variable", null, "string-2"]},
+            
+            // Value declarations with options
+            {regex: /^(Value)(\s+)(\w+)(\s+)(\w+)(\s+)(.*)$/, 
+             token: ["keyword", null, "attribute", null, "variable", null, "string-2"]},
+            
+            // State declarations
+            {regex: /^(Start|End)$/, token: "keyword"},
+            
+            // Rules (lines starting with ^)
+            {regex: /^\s*(\^.+?)(?=->|$)/, token: "string"},
+            
+            // Actions
+            {regex: /(->)(\s+)(\w+)/, 
+             token: ["operator", null, "def"]},
+            
+            // Variable references ${var}
+            {regex: /(\${)([^}]+)(})/, 
+             token: ["bracket", "variable-2", "bracket"]}
+        ],
+        
+        // The meta property contains global information about the mode
+        meta: {
+            lineComment: "#"
+        }
+    });
+
+    // Replace textarea with CodeMirror
+    const initialValue = templateTextarea.value;
+    
+    templateEditor = CodeMirror.fromTextArea(templateTextarea, {
+        mode: 'textfsm',
+        lineNumbers: true,
+        theme: document.body.classList.contains('vscode-light') ? 'vscode-light' : 'vscode-dark',
+        lineWrapping: true,
+        tabSize: 2,
+        indentWithTabs: false,
+        autofocus: false
+    });
+    
+    // Set initial content
+    templateEditor.setValue(initialValue);
+    
     // Attempt to load any saved state
     try {
         const state = vscode.getState();
         if (state) {
-            if (state.template) templateTextarea.value = state.template;
+            if (state.template) templateEditor.setValue(state.template);
             if (state.text) textTextarea.value = state.text;
             if (state.result) resultTextarea.value = state.result;
         }
@@ -33,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function saveState() {
         try {
             vscode.setState({
-                template: templateTextarea.value,
+                template: templateEditor.getValue(),
                 text: textTextarea.value,
                 result: resultTextarea.value
             });
@@ -43,7 +98,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Save state on input
-    templateTextarea.addEventListener('input', saveState);
+    templateEditor.on('change', function() {
+        saveState();
+    });
     textTextarea.addEventListener('input', saveState);
     
     // Update status
@@ -72,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Parse text
     parseButton.addEventListener('click', function() {
-        const template = templateTextarea.value;
+        const template = templateEditor.getValue();
         const text = textTextarea.value;
 
         if (!template || !text) {
@@ -115,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Parse to dictionary
     parseDictButton.addEventListener('click', function() {
-        const template = templateTextarea.value;
+        const template = templateEditor.getValue();
         const text = textTextarea.value;
 
         if (!template || !text) {
@@ -153,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Clear all
     clearButton.addEventListener('click', function() {
-        templateTextarea.value = '';
+        templateEditor.setValue('');
         textTextarea.value = '';
         resultTextarea.value = '';
         updateStatus('All fields cleared');
@@ -192,13 +249,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const message = event.data;
         switch (message.command) {
             case 'update-theme':
-                // The extension can notify about theme changes
+                // Update CodeMirror theme based on VS Code theme
                 document.body.className = message.theme;
+                if (message.theme === 'vscode-light') {
+                    templateEditor.setOption('theme', 'vscode-light');
+                } else if (message.theme === 'vscode-dark') {
+                    templateEditor.setOption('theme', 'vscode-dark');
+                } else {
+                    templateEditor.setOption('theme', 'vscode-high-contrast');
+                }
                 break;
             case 'file-content':
                 // File content received
                 if (message.type === 'template') {
-                    templateTextarea.value = message.content;
+                    templateEditor.setValue(message.content);
                     updateStatus('Template file loaded');
                 } else if (message.type === 'text') {
                     textTextarea.value = message.content;
@@ -209,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'set-content':
                 // Set initial content
                 if (message.content.template) {
-                    templateTextarea.value = message.content.template;
+                    templateEditor.setValue(message.content.template);
                 }
                 if (message.content.text) {
                     textTextarea.value = message.content.text;
@@ -225,13 +289,4 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
         }
     });
-    
-    // Detect initial theme from VS Code
-    if (document.body.classList.contains('vscode-light')) {
-        console.log('Light theme detected');
-    } else if (document.body.classList.contains('vscode-dark')) {
-        console.log('Dark theme detected');
-    } else if (document.body.classList.contains('vscode-high-contrast')) {
-        console.log('High contrast theme detected');
-    }
 });

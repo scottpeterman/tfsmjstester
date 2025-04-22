@@ -1,0 +1,53 @@
+{
+  "name": "TextFSM",
+  "scopeName": "source.textfsm",
+  "fileTypes": [
+    "textfsm",
+    "fsm",
+    "template"
+  ],
+  "patterns": [
+    {
+      "name": "comment.line.number-sign.textfsm",
+      "match": "^\\s*#.*$"
+    },
+    {
+      "name": "keyword.control.value.textfsm",
+      "match": "^\\s*(Value)\\s+(\\w+\\s+)?(\\w+)\\s+(.*)$",
+      "captures": {
+        "1": { "name": "keyword.other.textfsm" },
+        "2": { "name": "variable.parameter.textfsm" },
+        "3": { "name": "entity.name.variable.textfsm" },
+        "4": { "name": "string.regexp.textfsm" }
+      }
+    },
+    {
+      "name": "keyword.control.state.textfsm",
+      "match": "^\\s*(Start|End)\\s*$",
+      "captures": {
+        "1": { "name": "keyword.control.textfsm" }
+      }
+    },
+    {
+      "name": "constant.character.rule.textfsm",
+      "match": "^\\s*(\\^\\S.*)",
+      "captures": {
+        "1": { "name": "constant.character.textfsm" }
+      }
+    },
+    {
+      "name": "variable.parameter.variable-reference.textfsm",
+      "match": "\\$\\{(\\w+)\\}",
+      "captures": {
+        "1": { "name": "variable.other.textfsm" }
+      }
+    },
+    {
+      "name": "keyword.control.action.textfsm",
+      "match": "\\s+->(\\s+(\\w+))+",
+      "captures": {
+        "2": { "name": "keyword.other.action.textfsm" }
+      }
+    }
+  ]
+}

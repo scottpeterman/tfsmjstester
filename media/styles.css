@@ -266,3 +266,93 @@ button.clear:hover {
         min-height: 120px;
     }
 }
+/* CodeMirror styling to match VS Code */
+.CodeMirror {
+    height: 100%;
+    font-family: var(--vscode-editor-font-family, monospace);
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--foreground-color);
+    background-color: rgba(30, 30, 35, 0.6);
+  }
+  
+  .CodeMirror-gutters {
+    background-color: rgba(30, 30, 35, 0.8);
+    border-right: 1px solid var(--border-color);
+  }
+  
+  /* TextFSM token styling */
+  .cm-keyword {
+    color: #569CD6;
+    font-weight: bold;
+  }
+  
+  .cm-def {
+    color: #DCDCAA;
+  }
+  
+  .cm-variable, .cm-variable-2 {
+    color: #9CDCFE;
+  }
+  
+  .cm-attribute {
+    color: #9CDCFE;
+    font-style: italic;
+  }
+  
+  .cm-string, .cm-string-2 {
+    color: #CE9178;
+  }
+  
+  .cm-comment {
+    color: #6A9955;
+    font-style: italic;
+  }
+  
+  .cm-operator {
+    color: var(--foreground-color);
+  }
+  
+  .cm-bracket {
+    color: var(--foreground-color);
+  }
+  
+  /* Light theme adjustments */
+  .vscode-light .cm-keyword {
+    color: #0000FF;
+  }
+  
+  .vscode-light .cm-variable, 
+  .vscode-light .cm-variable-2 {
+    color: #267f99;
+  }
+  
+  .vscode-light .cm-string,
+  .vscode-light .cm-string-2 {
+    color: #a31515;
+  }
+  
+  .vscode-light .cm-comment {
+    color: #008000;
+  }
+  
+  .vscode-light .cm-def {
+    color: #795E26;
+  }
+  
+  /* VS Code themed CodeMirror */
+  .vscode-light .CodeMirror {
+    background-color: rgba(240, 240, 240, 0.6);
+  }
+  
+  .vscode-light .CodeMirror-gutters {
+    background-color: rgba(240, 240, 240, 0.8);
+  }
+  
+  .vscode-high-contrast .CodeMirror {
+    background-color: var(--background-color);
+  }
+  
+  .vscode-high-contrast .CodeMirror-gutters {
+    background-color: var(--background-color);
+  }
